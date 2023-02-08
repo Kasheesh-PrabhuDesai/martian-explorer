@@ -33,13 +33,16 @@ const useStyles = makeStyles(theme =>
       textTransform: "none",
       fontSize: "0.9rem",
     },
+    imageCaption: {
+      textAlign: "center",
+    },
   })
 );
 
 export default function PhotoCarousel() {
   const classes = useStyles();
   const { state } = useLocation();
-  const { date, cameraType } = state;
+  const { date } = state;
   const [photosData, setPhotosData] = useState([]);
   const [error, setError] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -47,18 +50,18 @@ export default function PhotoCarousel() {
 
   useEffect(() => {
     async function getPhotos() {
-      const response = await fetchPhotos({ date, cameraType });
+      const response = await fetchPhotos({ date });
       if (response.success) {
         setPhotosData([...response.photos]);
       } else {
         setError(response.errorMsg as string);
       }
     }
-    if (cameraType && date) getPhotos();
+    if (date) getPhotos();
     setTimeout(() => {
       setIsLoading(false);
     }, 1500);
-  }, [cameraType, date]);
+  }, [date]);
 
   useEffect(() => {
     if (!isLoading) {
@@ -106,14 +109,21 @@ export default function PhotoCarousel() {
             autoPlay={false}
             fullHeightHover={false}
             navButtonsAlwaysVisible
+            indicators={false}
+            cycleNavigation={false}
           >
             {photosData?.map(photo => (
-              <img
-                src={photo["img_src"]}
-                alt={photo["camera"]["full_name"]}
-                className={classes.image}
-                key={photo["id"]}
-              />
+              <>
+                <img
+                  src={photo["img_src"]}
+                  alt={photo["camera"]["full_name"]}
+                  className={classes.image}
+                  key={photo["id"]}
+                />
+                <Typography variant="h5" className={classes.imageCaption}>
+                  {photo?.camera?.full_name}
+                </Typography>
+              </>
             ))}
           </Carousel>
         </Fragment>

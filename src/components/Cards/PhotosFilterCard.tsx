@@ -13,7 +13,7 @@ import {
 } from "@material-ui/core";
 import { ChangeEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { CameraTypes, getTodaysDate } from "../../utils";
+import { getTodaysDate } from "../../utils";
 
 const useStyles = makeStyles(theme =>
   createStyles({
@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme =>
       marginTop: theme.spacing(12),
     },
     card: {
-      width: "70vw",
+      width: "40vw",
       borderRadius: 12,
     },
     buttonContainer: {
@@ -40,19 +40,23 @@ const useStyles = makeStyles(theme =>
 
 export default function FilterPhotos() {
   const classes = useStyles();
-  const [date, setDate] = useState<Date | string>(getTodaysDate());
-  const [cameraType, setCameraType] = useState<string>("fhaz");
+  const prevChosenDate = JSON.parse(localStorage.getItem("earth-date"));
+  const [date, setDate] = useState<Date | string>(
+    prevChosenDate ?? getTodaysDate()
+  );
+  // const [cameraType, setCameraType] = useState<string>("fhaz");
   const navigate = useNavigate();
-  const handleSelectCamera = (event: ChangeEvent<{ value: string }>) => {
-    setCameraType(event.target.value);
-  };
+  // const handleSelectCamera = (event: ChangeEvent<{ value: string }>) => {
+  //   setCameraType(event.target.value);
+  // };
 
   const handleSelectDate = (event: ChangeEvent<{ value: string }>) => {
     setDate(event.target.value);
+    localStorage.setItem("earth-date", JSON.stringify(event.target.value));
   };
 
   const handleShowPhotos = () => {
-    navigate("/photos", { state: { date: date, cameraType: cameraType } });
+    navigate("/photos", { state: { date: date } });
   };
 
   return (
@@ -60,8 +64,8 @@ export default function FilterPhotos() {
       <form onSubmit={handleShowPhotos}>
         <Card className={classes.card}>
           <CardContent>
-            <Grid container justifyContent="space-evenly" spacing={2}>
-              <Grid item xs={6}>
+            <Grid container>
+              <Grid item xs={12}>
                 <InputLabel className={classes.label}>Earth Date</InputLabel>
                 <TextField
                   type="date"
@@ -73,7 +77,7 @@ export default function FilterPhotos() {
                   inputProps={{ min: "2012-08-06", max: getTodaysDate() }}
                 />
               </Grid>
-              <Grid item xs={6}>
+              {/* <Grid item xs={6}>
                 <InputLabel className={classes.label}>Camera Type</InputLabel>
                 <Select
                   fullWidth
@@ -89,7 +93,7 @@ export default function FilterPhotos() {
                     <MenuItem value={type[0]}>{type[1]}</MenuItem>
                   ))}
                 </Select>
-              </Grid>
+              </Grid> */}
             </Grid>
             <Grid
               container

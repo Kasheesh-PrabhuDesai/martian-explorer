@@ -5,9 +5,8 @@ const useStyles = makeStyles(theme =>
   createStyles({
     container: {
       width: "100vw",
-      height: "100vh",
+      minHeight: "100vh",
       background: "url('/images/mars.jpeg')",
-      opacity: 0.9,
       backgroundPosition: "center",
       backgroundRepeat: "no-repeat",
       backgroundSize: "cover",
@@ -15,10 +14,13 @@ const useStyles = makeStyles(theme =>
     },
     text: {
       color: "#fff",
+      fontSize: "3rem",
+      lineHeight: "3rem",
     },
+    subtext: { color: "#fff", fontSize: "1.5rem" },
     button: {
       textTransform: "none",
-      fontSize: "1.5rem",
+      fontSize: "0.9rem",
     },
     contentContainer: {
       flexDirection: "column",
@@ -34,13 +36,13 @@ export default function HomePage() {
     <Grid container className={classes.container}>
       <Grid container className={classes.contentContainer} spacing={2}>
         <Grid item>
-          <Typography variant="h3" className={classes.text}>
-            Are you ready to explore Mars like never before?
+          <Typography className={classes.text}>
+            Are you ready to explore Mars like never before!
           </Typography>
         </Grid>
         <Grid item>
-          <Typography variant="h5" className={classes.text}>
-            Use the form below to start exploring
+          <Typography className={classes.subtext}>
+            Choose a date below to view all curiosity rover photos
           </Typography>
         </Grid>
         <Grid item>
