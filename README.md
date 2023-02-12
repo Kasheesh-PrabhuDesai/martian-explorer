@@ -26,3 +26,6 @@ Modular react folder structure has been used. The structure is as follows
 1. The earth date is the only input the user requires to search for photos. Reason behind this is that on certain days photos do not exist for all the different type of cameras available.
 
 2. On initial load earth date is the date on which you visit the app. But subsequently, on selection of earth date, it is stored in the local storage. The reason behind this is to make the user aware of the date last chosen when the user clicks on search again button.
+
+#WEB_APP
+The repo has been deployed and hosted on vercel. Follow this link https://martian-explorer.vercel.app/
